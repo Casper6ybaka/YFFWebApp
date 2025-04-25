@@ -6,6 +6,11 @@
     if (!string.IsNullOrEmpty(ViewBag.CurrentUser))
     {
         ViewBag.IsLoggedIn = true;
+
+        Context.Response.Cookies.Append("RememberMe", "", new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddDays(-1)
+                });
     }
 }
 <div>
@@ -39,9 +44,29 @@
     </dl>
 </div>
 <script>
-    window.location.reload();
+    function getCookieValue(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
+
+    const currentUser = getCookieValue("RememberMe");
+    const isLoggedIn = currentUser !== null;
+
+    if (!isLoggedIn) {
+        sessionStorage.removeItem("refreshedAfterLogin");
+    }
+
+    if (isLoggedIn && sessionStorage.getItem("refreshedAfterLogin") !== "true") {
+        sessionStorage.setItem("refreshedAfterLogin", "true");
+        location.reload(); // Only refresh once per login
+    }
 </script>
+
 <div>
     @Html.ActionLink("Edit", "EditPage", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to Login</a>
 </div>
+
+

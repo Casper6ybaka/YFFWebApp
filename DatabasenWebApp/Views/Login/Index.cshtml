@@ -1,11 +1,10 @@
 ﻿@model DatabasenWebApp.Models.UserModel
 @{
     ViewData["Title"] = "Login page";
-
     Context.Response.Cookies.Append("RememberMe", "", new CookieOptions
-        {
-            Expires = DateTimeOffset.UtcNow.AddDays(-1)
-        });
+            {
+                Expires = DateTimeOffset.UtcNow.AddDays(-1)
+            });
 }
 
 <h4>Login</h4>
