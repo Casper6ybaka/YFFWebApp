@@ -6,42 +6,88 @@
     if (!string.IsNullOrEmpty(ViewBag.CurrentUser))
     {
         ViewBag.IsLoggedIn = true;
+
+        Context.Response.Cookies.Append("RememberMe", "", new CookieOptions
+        {
+            Expires = DateTimeOffset.UtcNow.AddDays(-1)
+        });
     }
 }
+
 <div>
     <h4>Login Successful!</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Id)
         </dd>
-        <dt class = "col-sm-2">
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UserName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UserName)
         </dd>
-        <dt class = "col-sm-2">
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Password)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Password)
         </dd>
-        <dt class = "col-sm-2">
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Bio)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Bio)
+
+        <dd class="col-sm-10" id="bio-container">
+            <span id="bio-text">@Model.Bio</span>
+            <textarea id="bio-input" class="form-control" style="display:none;">@Model.Bio</textarea>
+            <button id="bio-edit-btn" class="btn btn-sm btn-secondary" type="button" onclick="toggleEditBio()">Edit</button>
         </dd>
+
     </dl>
 </div>
+
 <script>
-    window.location.reload();
+    function getCookieValue(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
+
+    const currentUser = getCookieValue("RememberMe");
+    const isLoggedIn = currentUser !== null;
+
+    if (!isLoggedIn) {
+        sessionStorage.removeItem("refreshedAfterLogin");
+    }
+
+    if (isLoggedIn && sessionStorage.getItem("refreshedAfterLogin") !== "true") {
+        sessionStorage.setItem("refreshedAfterLogin", "true");
+        location.reload(); 
+    }
+
+    function toggleEditBio() {
+        const bioText = document.getElementById("bio-text");
+        const bioInput = document.getElementById("bio-input");
+        const bioEditBtn = document.getElementById("bio-edit-btn")
+
+ 
+        if (bioInput.style.display === "none") {
+            bioText.style.display = "none";
+            bioInput.style.display = "block";
+            bioEditBtn.innerHTML = "Done";
+        } else {
+            bioText.textContent = bioInput.value; 
+            bioText.style.display = "block";
+            bioInput.style.display = "none";
+            bioEditBtn.innerHTML = "Edit";
+        }
+    }
 </script>
-<div>
-    @Html.ActionLink("Edit", "EditPage", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to Login</a>
-</div>
+
