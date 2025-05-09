@@ -12,6 +12,11 @@ namespace DatabasenWebApp.Controllers
         {
             return View();
         }
+
+        public IActionResult Test()
+        {
+            return View("LoginSuccess");
+        }
         public IActionResult ProcessLogin(UserModel usermodel)
         {
             if (securityService.IsValid(usermodel))
