@@ -1,4 +1,6 @@
-﻿@{
+﻿
+
+@{
     ViewBag.CurrentUser = Context.Request.Cookies["RememberMe"];
     bool IsLoggedIn = false;
 
@@ -41,7 +43,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Log in</a>
                         </li>
-
                     </ul>
                     <div class="navbar-user">
                         <a id="nametext" class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">@{
