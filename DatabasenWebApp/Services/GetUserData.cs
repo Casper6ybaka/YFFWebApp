@@ -1,6 +1,6 @@
 ﻿using DatabasenWebApp.Models;
 using Microsoft.Data.SqlClient;
-
+//Jeg liker ost
 namespace DatabasenWebApp.Services
 {
     public class GetUserData
