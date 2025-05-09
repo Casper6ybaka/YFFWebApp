@@ -94,7 +94,7 @@
                     userId: document.getElementById("bio-container").dataset.id
                 })
             }).then(res => {
-                if (res.ok) alert("Saved!");
+                if (res.ok) console.log("Saved!");
                 else alert("Failed!");
             })
 
