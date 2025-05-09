@@ -12,6 +12,11 @@ namespace DatabasenWebApp.Controllers
         {
             return View();
         }
+
+        public IActionResult BiosEdit()
+        {
+            return View();
+        }
         public IActionResult ProcessLogin(UserModel usermodel)
         {
             if (securityService.IsValid(usermodel))
