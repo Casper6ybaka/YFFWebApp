@@ -29,10 +29,16 @@ namespace DatabasenWebApp.Controllers
         }
 
         [HttpPost("edit-bio")]
-        public IActionResult editBio([FromBody] string bio, int userId)
+        public IActionResult editBio([FromBody] editBioClass data)
         {
-            getUserData.FuckSecurity(userId, bio);
+            getUserData.FuckSecurity(data.userId, data.bio);
             return Ok();
+        }
+
+        public class editBioClass
+        {
+            public string bio { get; set; }
+            public int userId { get; set; }
         }
     }
 }

@@ -45,7 +45,7 @@
         </dt>
 
         <dd class="col-sm-10" id="bio-container">
-            <span id="bio-text">@Model.Bio</span>
+            <p id="bio-text">@Model.Bio</p>
             <textarea id="bio-input" class="form-control" style="display:none;">@Model.Bio</textarea>
             <button id="bio-edit-btn" class="btn btn-sm btn-secondary" type="button" onclick="toggleEditBio()">Edit</button>
         </dd>
@@ -90,8 +90,8 @@
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    bio: newBio
-                    userId: document.getElementById("bio-container").dataset.id;
+                    bio: newBio,
+                    userId: document.getElementById("bio-container").dataset.id
                 })
             }).then(res => {
                 if (res.ok) alert("Saved!");

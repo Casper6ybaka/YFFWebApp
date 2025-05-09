@@ -66,10 +66,27 @@ namespace DatabasenWebApp.Services
             }
             return null;
         }
-        public int FuckSecurity(int id, string bio)
+        public bool FuckSecurity(int id, string bio)
         {
-            Debug.WriteLine("AAAAAAAAA");
-            return 1;
+
+            string sqlStatement = "UPDATE dbo.Users SET bio = @bio WHERE id = @id";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(sqlStatement, connection);
+                command.Parameters.Add("@bio", System.Data.SqlDbType.VarChar).Value = bio;
+                command.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = id;
+
+                try
+                {
+                    connection.Open();
+                    int UsersAffected = command.ExecuteNonQuery();
+                    return UsersAffected > 0;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
     }
 }
