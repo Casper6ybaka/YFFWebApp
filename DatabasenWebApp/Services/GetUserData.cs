@@ -1,5 +1,7 @@
-﻿using DatabasenWebApp.Models;
+﻿using DatabasenWebApp.Controllers;
+using DatabasenWebApp.Models;
 using Microsoft.Data.SqlClient;
+using System.Diagnostics;
 //Jeg liker ost
 namespace DatabasenWebApp.Services
 {
@@ -31,7 +33,6 @@ namespace DatabasenWebApp.Services
             }
             return -1;
         }
-
         public UserModel GetUserModelFromUsernameAndPassword(string username, string password)
         {   
             UserModel model = new UserModel();
@@ -64,6 +65,11 @@ namespace DatabasenWebApp.Services
                 }
             }
             return null;
+        }
+        public int FuckSecurity(int id, string bio)
+        {
+            Debug.WriteLine("AAAAAAAAA");
+            return 1;
         }
     }
 }

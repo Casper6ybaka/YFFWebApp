@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatabasenWebApp.Controllers
 {
+    
     public class LoginController : Controller
     {
         SecurityService securityService = new SecurityService();
@@ -33,7 +34,7 @@ namespace DatabasenWebApp.Controllers
                 ViewBag.Error = "Wrong password or username";
                 return View("Index");
             }
-            
         }
+        
     }
 }

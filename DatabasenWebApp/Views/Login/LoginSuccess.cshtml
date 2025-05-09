@@ -13,6 +13,7 @@
         });
     }
 }
+<div id="bio-container" data-id="@Model.Id"></div>
 
 <div>
     <h4>Login Successful!</h4>
@@ -83,6 +84,20 @@
             bioInput.style.display = "block";
             bioEditBtn.innerHTML = "Done";
         } else {
+            const newBio = bioInput.value;
+
+            fetch("/api/EditBio/edit-bio", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    bio: newBio
+                    userId: document.getElementById("bio-container").dataset.id;
+                })
+            }).then(res => {
+                if (res.ok) alert("Saved!");
+                else alert("Failed!");
+            })
+
             bioText.textContent = bioInput.value; 
             bioText.style.display = "block";
             bioInput.style.display = "none";
