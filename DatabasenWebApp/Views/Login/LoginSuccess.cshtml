@@ -53,6 +53,13 @@
     </dl>
 </div>
 
+<div class="form-group">
+    <label for="bg-color-picker">Choose Background Color (Hex):</label>
+    <input type="text" id="bg-color-input" class="form-control" placeholder="#ffffff" maxlength="7" />
+    <button class="btn btn-sm btn-primary mt-2" onclick="changeBackgroundColor()">Apply</button>
+</div>
+
+
 <script>
     function getCookieValue(name) {
         const value = `; ${document.cookie}`;
@@ -104,5 +111,23 @@
             bioEditBtn.innerHTML = "Edit";
         }
     }
+
+    function changeBackgroundColor() {
+        const color = document.getElementById("bg-color-input").value;
+        if (/^#[0-9A-F]{6}$/i.test(color)) {
+            document.body.style.backgroundColor = color;
+            localStorage.setItem("siteBackgroundColor", color); 
+        } else {
+            alert("Invalid hex code. Please use format like #aabbcc");
+        }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+        const savedColor = localStorage.getItem("siteBackgroundColor");
+        if (savedColor) {
+            document.body.style.backgroundColor = savedColor;
+            document.getElementById("bg-color-input").value = savedColor;
+        }
+    });
 </script>
 
